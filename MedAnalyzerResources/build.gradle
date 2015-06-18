@@ -28,6 +28,8 @@ dependencies {
     compile("org.springframework.data:spring-data-mongodb:1.7.0.BUILD-SNAPSHOT")
     compile("org.springframework.data:spring-data-rest-webmvc")
     compile('com.fasterxml.jackson.core:jackson-databind:2.5.0')
+    compile('org.json:json:20141113')
+    compile('commons-io:commons-io:2.4')
 }
 
 apply plugin: 'spring-boot'
