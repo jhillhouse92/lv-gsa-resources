@@ -1,5 +1,6 @@
 package com.longview.gsa.repository;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,7 @@ public class DrugRepositoryImpl implements DrugRepository {
 	@Override
 	public <S extends DrugLabel> List<S> insert(Iterable<S> entities) {
 		// TODO Auto-generated method stub
+		mongoTemplate.insertAll((Collection<? extends Object>) entities);
 		return null;
 	}
 

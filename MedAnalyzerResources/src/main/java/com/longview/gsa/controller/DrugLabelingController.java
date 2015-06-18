@@ -6,14 +6,13 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 import org.apache.commons.io.IOUtils;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.longview.gsa.domain.DrugLabel;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.longview.gsa.domain.FDAResult;
 import com.longview.gsa.domain.Greeting;
 import com.longview.gsa.repository.DrugRepository;
 
@@ -26,15 +25,13 @@ public class DrugLabelingController {
 
 	@RequestMapping(value = "/setup")
 	public Greeting setup() {
-		JSONObject json = new JSONObject();
-
+		FDAResult fdaResult = new FDAResult();
 		try {
-			json = new JSONObject(
-					IOUtils.toString(
-							new URL(
-									"https://api.fda.gov/drug/label.json?search=openfda.substance_name:%22acetaminophen%22&limit=1"),
-							Charset.forName("UTF-8")));
-		} catch (JSONException e) {
+			fdaResult = new Gson().fromJson(IOUtils.toString(
+					new URL(
+							"https://api.fda.gov/drug/label.json?search=openfda.substance_name:%22acetaminophen%22&limit=1"),
+					Charset.forName("UTF-8")), FDAResult.class);
+		} catch (JsonSyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
@@ -44,13 +41,8 @@ public class DrugLabelingController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		JSONArray results = json.getJSONArray("results");
-		for(int i = 0; i<results.length(); i++){
-			DrugLabel dl = new DrugLabel();
-		}
 		
-		drugRepository.insertDBObject(o);
+		drugRepository.insert(fdaResult.getResults());
 
 		return new Greeting(1, "Setup ran!");
 	}

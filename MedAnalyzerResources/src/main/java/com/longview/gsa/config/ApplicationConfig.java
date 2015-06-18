@@ -19,7 +19,7 @@ public class ApplicationConfig extends AbstractMongoConfiguration {
 	@Override
 	protected String getDatabaseName() {
 		// TODO Auto-generated method stub
-		return "drugs";
+		return "fda";
 	}
 
 	@Override
