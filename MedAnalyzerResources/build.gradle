@@ -1,0 +1,43 @@
+buildscript {
+    repositories {
+        maven { url "https://repo.spring.io/libs-release" }
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+	classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE")
+    }
+}
+
+jar {
+	baseName = 'MedAnalyzerResources'
+	version = '0.0.1'
+}
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+	maven { url "https://repo.spring.io/libs-release" }
+    maven { url "https://m2.neo4j.org" }
+    maven { url 'http://repo.spring.io/snapshot' }
+}
+
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.data:spring-data-mongodb:1.7.0.BUILD-SNAPSHOT")
+    compile("org.springframework.data:spring-data-rest-webmvc")
+    compile('com.fasterxml.jackson.core:jackson-databind:2.5.0')
+}
+
+apply plugin: 'spring-boot'
+apply plugin: 'war'
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.11'
+}
+
+task showMeCache << {
+  configurations.compile.each { println it }
+}
+

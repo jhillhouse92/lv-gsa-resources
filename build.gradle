@@ -1,0 +1,39 @@
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    repositories {
+        maven { url "https://repo.spring.io/libs-release" }
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+	testCompile("junit:junit")
+    }    
+}
+
+buildscript {
+    repositories {
+        maven { url "https://repo.spring.io/libs-release" }
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+	classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE")
+    }
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+}
+
+apply plugin: 'spring-boot'
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.11'
+}
+
+task showMeCache << {
+  configurations.compile.each { println it }
+}
+
