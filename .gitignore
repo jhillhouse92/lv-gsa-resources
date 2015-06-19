@@ -4,7 +4,10 @@ MedAnalyzerResources/gradle/
 MedAnalyzerResources/gradlew
 MedAnalyzerResources/gradlew.bat
 *.class
-
+.classpath
+.settings/org.eclipse.jdt.core.prefs
+MedAnalyzerResources/.classpath
+MedAnalyzerResources/.settings/org.eclipse.jdt.core.prefs
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
