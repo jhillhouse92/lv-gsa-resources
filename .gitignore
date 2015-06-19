@@ -1,6 +1,8 @@
 # Ignore Gradle
 .gradle/
-
+MedAnalyzerResources/gradle/
+MedAnalyzerResources/gradlew
+MedAnalyzerResources/gradlew.bat
 *.class
 
 # Mobile Tools for Java (J2ME)
