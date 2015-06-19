@@ -4,6 +4,13 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.List;
+
+import net.sf.extjwnl.JWNLException;
+import net.sf.extjwnl.data.IndexWord;
+import net.sf.extjwnl.data.POS;
+import net.sf.extjwnl.data.Synset;
+import net.sf.extjwnl.dictionary.Dictionary;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +22,7 @@ import com.google.gson.JsonSyntaxException;
 import com.longview.gsa.domain.FDAResult;
 import com.longview.gsa.domain.Greeting;
 import com.longview.gsa.repository.DrugRepository;
+
 
 @RestController
 @RequestMapping(value = "/drugs")
@@ -49,6 +57,16 @@ public class DrugLabelingController {
 	
 	@RequestMapping(value = "/clean-warnings")
 	public Greeting cleanWarnings() {
+		try {
+			Dictionary d = 	Dictionary.getDefaultResourceInstance();
+			IndexWord word = d.lookupIndexWord(POS.VERB, "accomplish");
+			List<Synset> wordSynset = word.getSenses();
+			
+			return new Greeting(1, wordSynset.get(0).getGloss());
+		} catch (JWNLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 }

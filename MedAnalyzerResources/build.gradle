@@ -30,6 +30,16 @@ dependencies {
     compile('com.fasterxml.jackson.core:jackson-databind:2.5.0')
     compile('com.google.code.gson:gson:2.3.1')
     compile('commons-io:commons-io:2.4')
+    compile('net.sf.extjwnl:extjwnl:1.8.1'){
+	exclude module: 'slf4j-log4j12-1.7.12'
+        exclude module: 'logback-classic-1.1.2'
+	exclude module: 'slf4j-log4j12'
+    }
+    compile('net.sf.extjwnl:extjwnl-data-wn31:1.2'){
+        exclude module: 'slf4j-log4j12'
+	exclude module: 'slf4j-log4j12-1.7.12'
+   	exclude module: 'logback-classic-1.1.2'
+    }
 }
 
 apply plugin: 'spring-boot'
