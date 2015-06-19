@@ -29,7 +29,7 @@ public class DrugLabelingController {
 		try {
 			fdaResult = new Gson().fromJson(IOUtils.toString(
 					new URL(
-							"https://api.fda.gov/drug/label.json?search=openfda.substance_name:%22acetaminophen%22&limit=1"),
+							"https://api.fda.gov/drug/label.json?limit=100&skip=0"),
 					Charset.forName("UTF-8")), FDAResult.class);
 		} catch (JsonSyntaxException e) {
 			// TODO Auto-generated catch block
@@ -45,5 +45,10 @@ public class DrugLabelingController {
 		drugRepository.insert(fdaResult.getResults());
 
 		return new Greeting(1, "Setup ran!");
+	}
+	
+	@RequestMapping(value = "/clean-warnings")
+	public Greeting cleanWarnings() {
+		return null;
 	}
 }
