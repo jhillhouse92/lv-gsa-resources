@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -84,7 +86,9 @@ public class DrugRepositoryImpl implements DrugRepository {
 	@Override
 	public Iterable<DrugLabel> findAll(Iterable<String> ids) {
 		// TODO Auto-generated method stub
-		return null;
+		List<String> idList = StreamSupport.stream(ids.spliterator(), false)
+				.collect(Collectors.toList());
+		return mongoTemplate.find(new Query().addCriteria(Criteria.where("id").in(idList)), DrugLabel.class);
 	}
 
 	@Override
@@ -124,6 +128,7 @@ public class DrugRepositoryImpl implements DrugRepository {
 		collection.insert(dbObj);
 	}
 	
+	@Override
 	public List<DrugLabel> fetchMedsList(List<String> fieldNames, String criteriaValue) {
 		if(NullCheck.isNotNullish(fieldNames) && NullCheck.isNotNullish(criteriaValue)){
 			Criteria criteria = new Criteria();

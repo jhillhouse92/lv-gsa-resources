@@ -72,4 +72,10 @@ public class AdminServiceImpl implements AdminService {
 		
 		warningRepo.insert(warningCategories);
 	}
+
+	@Override
+	public List<WarningCategory> getWarningCategories() {
+		// TODO Auto-generated method stub
+		return warningRepo.fetchValidWarnings();
+	}
 }

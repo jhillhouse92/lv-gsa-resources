@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.longview.gsa.domain.WarningCategory;
@@ -109,6 +111,12 @@ public class WarningCategoriesRepositoryImpl implements
 	public void deleteAll() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public List<WarningCategory> fetchValidWarnings() {
+		// TODO Auto-generated method stub
+		return mongoTemplate.find(new Query().addCriteria(Criteria.where("valid").is(true)), WarningCategory.class);
 	}
 
 }

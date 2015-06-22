@@ -19,7 +19,7 @@ import com.longview.gsa.domain.DrugLabel;
 import com.longview.gsa.domain.GraphResult;
 import com.longview.gsa.domain.Greeting;
 import com.longview.gsa.service.AdminService;
-import com.longview.gsa.service.MedCheckerService;
+import com.longview.gsa.service.DrugService;
 
 
 @RestController
@@ -27,7 +27,7 @@ import com.longview.gsa.service.MedCheckerService;
 public class DrugLabelingController {
 	
 	@Autowired
-	private MedCheckerService medCheckerService;
+	private DrugService drugService;
 	
 	@Autowired
 	private AdminService adminService;
@@ -75,11 +75,11 @@ public class DrugLabelingController {
 	
 	@RequestMapping(value = "/search/{keyWord}")
 	public List<DrugLabel> fetchMedList(@PathVariable String keyWord) {
-		return medCheckerService.fetchMedList(keyWord);
+		return drugService.fetchMedList(keyWord);
 	}
 	
-	@RequestMapping(value = "graph/", method = RequestMethod.POST)
-	public List<GraphResult> showgraph(List<String> ids){
-		return null;
+	@RequestMapping(value = "graph", method = RequestMethod.POST)
+	public List<GraphResult> showGraph(List<String> ids){
+		return drugService.fetchGraph(ids);
 	}
 }
