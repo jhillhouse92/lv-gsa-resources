@@ -15,14 +15,17 @@ import net.sf.extjwnl.dictionary.Dictionary;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.longview.gsa.domain.DrugLabel;
 import com.longview.gsa.domain.FDAResult;
 import com.longview.gsa.domain.Greeting;
 import com.longview.gsa.repository.DrugRepository;
+import com.longview.gsa.service.MedCheckerService;
 
 
 @RestController
@@ -32,6 +35,9 @@ public class DrugLabelingController {
 	@Autowired
 	private DrugRepository drugRepository;
 
+	@Autowired
+	private MedCheckerService medCheckerService;
+	
 	@RequestMapping(value = "/setup")
 	public Greeting setup() {
 		FDAResult fdaResult = new FDAResult();
@@ -92,5 +98,10 @@ public class DrugLabelingController {
 			this.pos = pos;
 			this.count = count;
 		}
+	}
+	
+	@RequestMapping(value = "/search/{keyWord}")
+	public List<DrugLabel> fetchMedList(@PathVariable String keyWord) {
+		return medCheckerService.fetchMedList(keyWord);
 	}
 }

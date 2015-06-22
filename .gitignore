@@ -3,6 +3,8 @@
 MedAnalyzerResources/gradle/
 MedAnalyzerResources/gradlew
 MedAnalyzerResources/gradlew.bat
+build/
+MedAnalyzerResources/build/
 *.class
 .classpath
 .settings/org.eclipse.jdt.core.prefs

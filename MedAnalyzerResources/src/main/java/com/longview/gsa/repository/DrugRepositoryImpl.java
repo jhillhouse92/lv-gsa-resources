@@ -1,16 +1,21 @@
 package com.longview.gsa.repository;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.longview.gsa.domain.DrugLabel;
+import com.longview.gsa.utility.NullCheck;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 
@@ -117,5 +122,16 @@ public class DrugRepositoryImpl implements DrugRepository {
 		DBCollection collection = mongoTemplate.getCollection("drugs");
 		collection.insert(dbObj);
 	}
-
+	
+	public List<DrugLabel> fetchMedsList(List<String> fieldNames, String criteriaValue) {
+		if(NullCheck.isNotNullish(fieldNames) && NullCheck.isNotNullish(criteriaValue)){
+			Criteria criteria = new Criteria();
+			List<Criteria> criteriaList = new ArrayList<Criteria>();
+			for (String fieldName: fieldNames) {
+				criteriaList.add(Criteria.where(fieldName).regex(Pattern.compile(criteriaValue,Pattern.CASE_INSENSITIVE)));
+			}	
+			return mongoTemplate.find(new Query(criteria.orOperator(criteriaList.toArray(new Criteria[fieldNames.size()]))), DrugLabel.class);
+		}
+		return null;
+	}
 }
