@@ -11,6 +11,7 @@ import net.sf.extjwnl.dictionary.Dictionary;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -79,7 +80,7 @@ public class DrugLabelingController {
 	}
 	
 	@RequestMapping(value = "graph", method = RequestMethod.POST)
-	public List<GraphResult> showGraph(List<String> ids){
+	public List<GraphResult> showGraph(@RequestBody List<String> ids){
 		return drugService.fetchGraph(ids);
 	}
 }

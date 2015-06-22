@@ -34,7 +34,7 @@ public class DrugServiceImpl implements DrugService{
 		List<GraphResult> results = new ArrayList<GraphResult>();
 		
 		//get list of the drugs
-		List<DrugLabel> drugLabels = (List<DrugLabel>) drugRepository.findAll(ids);
+		List<DrugLabel> drugLabels = (List<DrugLabel>) drugRepository.findAllById(ids);
 		
 		//for each drug, look which warnings match
 		for(DrugLabel drug : drugLabels){
