@@ -1,9 +1,5 @@
 package com.longview.gsa.controller;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,18 +9,14 @@ import net.sf.extjwnl.data.IndexWordSet;
 import net.sf.extjwnl.data.POS;
 import net.sf.extjwnl.dictionary.Dictionary;
 
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.longview.gsa.domain.DrugLabel;
-import com.longview.gsa.domain.FDAResult;
 import com.longview.gsa.domain.Greeting;
-import com.longview.gsa.repository.DrugRepository;
+import com.longview.gsa.service.AdminService;
 import com.longview.gsa.service.MedCheckerService;
 
 
@@ -33,32 +25,15 @@ import com.longview.gsa.service.MedCheckerService;
 public class DrugLabelingController {
 	
 	@Autowired
-	private DrugRepository drugRepository;
-
-	@Autowired
 	private MedCheckerService medCheckerService;
+	
+	@Autowired
+	private AdminService adminService;
 	
 	@RequestMapping(value = "/setup")
 	public Greeting setup() {
-		FDAResult fdaResult = new FDAResult();
-		try {
-			fdaResult = new Gson().fromJson(IOUtils.toString(
-					new URL(
-							"https://api.fda.gov/drug/label.json?limit=100&skip=0"),
-					Charset.forName("UTF-8")), FDAResult.class);
-		} catch (JsonSyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		drugRepository.insert(fdaResult.getResults());
-
+		adminService.importFromFDA();
+		adminService.ImportWarningCategories();
 		return new Greeting(1, "Setup ran!");
 	}
 	
@@ -67,10 +42,6 @@ public class DrugLabelingController {
 		try {
 			Dictionary d = 	Dictionary.getDefaultResourceInstance();
 			IndexWordSet word = d.lookupAllIndexWords("keep");
-			String nounCount = "There are " + word.getSenseCount(POS.NOUN) + " nouns";
-			String verbCount = "There are " + word.getSenseCount(POS.VERB) + " verbs";
-			String adjectiveCount = "There are " + word.getSenseCount(POS.ADJECTIVE) + " adjectives";
-			String adverbCount = "There are " + word.getSenseCount(POS.ADVERB) + " adverbs";
 			
 			List<Speech> typeOfSpeech = new ArrayList<Speech>();
 			typeOfSpeech.add(new Speech(POS.NOUN, word.getSenseCount(POS.NOUN)));
