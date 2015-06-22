@@ -1,39 +1,39 @@
-{ "_id" : "about warning", "value" : 4 }
-{ "_id" : "alcohol warning", "value" : 4, "valid" : true }
-{ "_id" : "allergy warning", "value" : 12, "valid" : true }
-{ "_id" : "although warning", "value" : 4 }
-{ "_id" : "anaphylactoid warning", "value" : 4, "valid" : true }
-{ "_id" : "because warning", "value" : 4 }
-{ "_id" : "before warning", "value" : 4 }
-{ "_id" : "below warning", "value" : 4 }
-{ "_id" : "bleeding warning", "value" : 16, "valid" : true }
-{ "_id" : "boxed warning", "value" : 8 }
-{ "_id" : "cardiac warning", "value" : 8, "valid" : true }
-{ "_id" : "cautions warning", "value" : 4 }
-{ "_id" : "clinical warning", "value" : 4 }
-{ "_id" : "consult warning", "value" : 4 }
-{ "_id" : "contains warning", "value" : 4 }
-{ "_id" : "convulsive warning", "value" : 4, "valid" : true }
-{ "_id" : "embryofetal warning", "value" : 4, "valid" : true }
-{ "_id" : "hepatotoxicity warning", "value" : 4, "valid" : true }
-{ "_id" : "immediate warning", "value" : 4 }
-{ "_id" : "increased warning", "value" : 4 }
-{ "_id" : "keep warning", "value" : 12 }
-{ "_id" : "liver warning", "value" : 32, "valid" : true }
-{ "_id" : "lorazepam warning", "value" : 4, "valid" : true }
-{ "_id" : "overdose warning", "value" : 12, "valid" : true }
-{ "_id" : "oxycontin warning", "value" : 4, "valid" : true }
-{ "_id" : "patients warning", "value" : 4 }
-{ "_id" : "psychiatric warning", "value" : 4, "valid" : true }
-{ "_id" : "rare warning", "value" : 4 }
-{ "_id" : "reye's warning", "value" : 8, "valid" : true }
-{ "_id" : "section warning", "value" : 12 }
-{ "_id" : "seeboxed warningadverse", "value" : 4 }
-{ "_id" : "serious warning", "value" : 4 }
-{ "_id" : "serotonin warning", "value" : 4, "valid" : true }
-{ "_id" : "signs warning", "value" : 4 }
-{ "_id" : "since warning", "value" : 4 }
-{ "_id" : "skin warning", "value" : 4, "valid" : true }
-{ "_id" : "stop warning", "value" : 8 }
-{ "_id" : "throat warning", "value" : 8, "valid" : true }
-{ "_id" : "very warning", "value" : 4 }
+[{ "_id" : "about warning", "value" : 4 },
+{ "_id" : "alcohol warning", "value" : 4, "valid" : true },
+{ "_id" : "allergy warning", "value" : 12, "valid" : true },
+{ "_id" : "although warning", "value" : 4 },
+{ "_id" : "anaphylactoid warning", "value" : 4, "valid" : true },
+{ "_id" : "because warning", "value" : 4 },
+{ "_id" : "before warning", "value" : 4 },
+{ "_id" : "below warning", "value" : 4 },
+{ "_id" : "bleeding warning", "value" : 16, "valid" : true },
+{ "_id" : "boxed warning", "value" : 8 },
+{ "_id" : "cardiac warning", "value" : 8, "valid" : true },
+{ "_id" : "cautions warning", "value" : 4 },
+{ "_id" : "clinical warning", "value" : 4 },
+{ "_id" : "consult warning", "value" : 4 },
+{ "_id" : "contains warning", "value" : 4 },
+{ "_id" : "convulsive warning", "value" : 4, "valid" : true },
+{ "_id" : "embryofetal warning", "value" : 4, "valid" : true },
+{ "_id" : "hepatotoxicity warning", "value" : 4, "valid" : true },
+{ "_id" : "immediate warning", "value" : 4 },
+{ "_id" : "increased warning", "value" : 4 },
+{ "_id" : "keep warning", "value" : 12 },
+{ "_id" : "liver warning", "value" : 32, "valid" : true },
+{ "_id" : "lorazepam warning", "value" : 4, "valid" : true },
+{ "_id" : "overdose warning", "value" : 12, "valid" : true },
+{ "_id" : "oxycontin warning", "value" : 4, "valid" : true },
+{ "_id" : "patients warning", "value" : 4 },
+{ "_id" : "psychiatric warning", "value" : 4, "valid" : true },
+{ "_id" : "rare warning", "value" : 4 },
+{ "_id" : "reye's warning", "value" : 8, "valid" : true },
+{ "_id" : "section warning", "value" : 12 },
+{ "_id" : "seeboxed warningadverse", "value" : 4 },
+{ "_id" : "serious warning", "value" : 4 },
+{ "_id" : "serotonin warning", "value" : 4, "valid" : true },
+{ "_id" : "signs warning", "value" : 4 },
+{ "_id" : "since warning", "value" : 4 },
+{ "_id" : "skin warning", "value" : 4, "valid" : true },
+{ "_id" : "stop warning", "value" : 8 },
+{ "_id" : "throat warning", "value" : 8, "valid" : true },
+{ "_id" : "very warning", "value" : 4 }]

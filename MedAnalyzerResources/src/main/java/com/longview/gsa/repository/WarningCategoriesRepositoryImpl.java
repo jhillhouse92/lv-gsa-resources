@@ -46,6 +46,7 @@ public class WarningCategoriesRepositoryImpl implements
 	@Override
 	public <S extends WarningCategory> List<S> insert(Iterable<S> entities) {
 		// TODO Auto-generated method stub
+		mongoTemplate.dropCollection(WarningCategory.class);
 		mongoTemplate.insertAll((Collection<? extends Object>) entities);
 		return null;
 	}

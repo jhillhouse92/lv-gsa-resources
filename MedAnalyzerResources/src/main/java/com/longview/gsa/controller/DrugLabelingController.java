@@ -12,9 +12,11 @@ import net.sf.extjwnl.dictionary.Dictionary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.longview.gsa.domain.DrugLabel;
+import com.longview.gsa.domain.GraphResult;
 import com.longview.gsa.domain.Greeting;
 import com.longview.gsa.service.AdminService;
 import com.longview.gsa.service.MedCheckerService;
@@ -74,5 +76,10 @@ public class DrugLabelingController {
 	@RequestMapping(value = "/search/{keyWord}")
 	public List<DrugLabel> fetchMedList(@PathVariable String keyWord) {
 		return medCheckerService.fetchMedList(keyWord);
+	}
+	
+	@RequestMapping(value = "graph/", method = RequestMethod.POST)
+	public List<GraphResult> showgraph(List<String> ids){
+		return null;
 	}
 }
