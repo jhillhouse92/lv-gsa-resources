@@ -11,5 +11,4 @@ public interface DrugRepository extends MongoRepository<DrugLabel, String> {
 
 	public void insertDBObject(DBObject dbObj);
 	public List<DrugLabel> fetchMedsList(List<String> fieldNames, String criteriaValue);
-	public List<DrugLabel> findAllById(List<String> ids);
 }

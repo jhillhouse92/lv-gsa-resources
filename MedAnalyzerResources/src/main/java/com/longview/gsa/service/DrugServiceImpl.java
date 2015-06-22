@@ -34,23 +34,30 @@ public class DrugServiceImpl implements DrugService{
 		List<GraphResult> results = new ArrayList<GraphResult>();
 		
 		//get list of the drugs
-		List<DrugLabel> drugLabels = (List<DrugLabel>) drugRepository.findAllById(ids);
+		List<DrugLabel> drugLabels = (List<DrugLabel>) drugRepository.findAll(ids);
 		
 		//for each drug, look which warnings match
 		for(DrugLabel drug : drugLabels){
 			
 			//for each warning check to see if this warning matches
-			String warning = String.join(" ", drug.getWarnings());
-			List<String> warningCategories = 
-					adminSerivce.getWarningCategories().stream()
-					.filter(w -> warning.contains(w.get_id().split(" ")[0]))
-					.map(w -> w.get_id())
-					.collect(Collectors.toList());
-			GraphResult graphItem = new GraphResult();
-			graphItem.setId(drug.getId());
-			graphItem.setBrandName(String.join(" ", drug.getOpenfda().getBrand_name()));
-			graphItem.setWarnings(warningCategories);
-			results.add(graphItem);
+			if(null != drug.getWarnings()){
+				String warning = String.join(" ", drug.getWarnings());
+				
+				//find based on mapReduce results using same algorithm of warning before or after
+				List<String> warningCategories = 
+						adminSerivce.getWarningCategories().stream()
+						.filter(w -> warning.toLowerCase().contains(w.get_id().split(" ")[0].toLowerCase().trim() + " warning")
+									|| warning.toLowerCase().contains("warning " + w.get_id().split(" ")[0].toLowerCase().trim())
+									|| warning.toLowerCase().contains("warnings " + w.get_id().split(" ")[0].toLowerCase().trim())
+								)
+						.map(w -> w.get_id())
+						.collect(Collectors.toList());
+				GraphResult graphItem = new GraphResult();
+				graphItem.setId(drug.getId());
+				graphItem.setBrandName(String.join(" ", drug.getOpenfda().getBrand_name()));
+				graphItem.setWarnings(warningCategories);
+				results.add(graphItem);
+			}
 		}
 		
 		return results;
