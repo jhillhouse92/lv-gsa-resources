@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +20,15 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.longview.gsa.domain.FDAResult;
 import com.longview.gsa.domain.WarningCategory;
+import com.longview.gsa.exception.MedCheckerException;
 import com.longview.gsa.repository.DrugRepository;
 import com.longview.gsa.repository.WarningCategoriesRepository;
 
 @Service
 public class AdminServiceImpl implements AdminService {
 
+	private static org.apache.log4j.Logger log = Logger.getLogger(AdminServiceImpl.class);
+	   
 	@Autowired
 	private DrugRepository drugRepository;
 	
@@ -33,23 +37,20 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Override
 	public void importFromFDA(){
+		
 		FDAResult fdaResult = new FDAResult();
 		try {
 			fdaResult = new Gson().fromJson(IOUtils.toString(
 					new URL(
-							"https://api.fda.gov/drug/label.json?limit=100&skip=0"),
+							"https://api.fda.govv/drug/label.json?limit=100&skip=0"),
 					Charset.forName("UTF-8")), FDAResult.class);
 		} catch (JsonSyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new MedCheckerException("error error errror");
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new MedCheckerException("error error errror");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new MedCheckerException("error error errror");
 		}
-		
 		drugRepository.insert(fdaResult.getResults());
 	}
 	
@@ -62,6 +63,7 @@ public class AdminServiceImpl implements AdminService {
 			warningCategories = new Gson().fromJson(
 					reader, 
 					new TypeToken<List<WarningCategory>>() {}.getType());
+
 		} catch (JsonSyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,16 +1,19 @@
 package com.longview.gsa.exception;
 
+import org.apache.log4j.Logger;
 
 public class MedCheckerException extends RuntimeException{
-
+	
+	private static org.apache.log4j.Logger log = Logger.getLogger(MedCheckerException.class);
+	
 	private static final long serialVersionUID = 5566238862313119778L;
 	
-	private String error;
-
-    public MedCheckerException(String message, String error) {
+    public MedCheckerException(String message) {
         super(message);
-        this.error = error;
+        log.error(message);
     }
-
-    public String getErrors() { return error; }
+    
+    public MedCheckerException(String message, Throwable t) {
+        super(message, t);
+    }
 }
