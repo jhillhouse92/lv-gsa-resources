@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.longview.gsa.domain.DrugLabel;
+import com.longview.gsa.domain.DrugSearchResult;
 import com.longview.gsa.domain.GraphResult;
 import com.longview.gsa.domain.Greeting;
 import com.longview.gsa.service.AdminService;
@@ -75,7 +76,7 @@ public class DrugLabelingController {
 	}
 	
 	@RequestMapping(value = "/search/{keyWord}")
-	public List<DrugLabel> fetchMedList(@PathVariable String keyWord) {
+	public DrugSearchResult fetchMedList(@PathVariable String keyWord) {
 		return drugService.fetchMedList(keyWord);
 	}
 	
