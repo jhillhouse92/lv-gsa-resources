@@ -25,13 +25,36 @@ public class DrugServiceImpl implements DrugService{
 	private static final String[] fieldNames = {"openfda.brand_name","openfda.generic_name","openfda.substance_name"}; 
 
 	@Override
-	public DrugSearchResult fetchMedList(String criteriaValue){	
-		DrugSearchResult dsr = new DrugSearchResult();
-		dsr.setBrandName(drugRepository.fetchMedsList(Arrays.asList(fieldNames[0]), criteriaValue));
-		dsr.setGenericName(drugRepository.fetchMedsList(Arrays.asList(fieldNames[1]), criteriaValue));
-		dsr.setSubstanceName(drugRepository.fetchMedsList(Arrays.asList(fieldNames[2]), criteriaValue));
+	public List<DrugSearchResult> fetchMedList(String criteriaValue){	
+		List<DrugSearchResult> dsrList = new ArrayList<DrugSearchResult>();
 		
-		return dsr;
+		List<DrugLabel> mongoSearchResults = drugRepository.fetchMedsList(Arrays.asList(fieldNames), criteriaValue);
+		
+		for(DrugLabel dl : mongoSearchResults){
+			String brandName = String.join(" ", dl.getOpenfda().getBrand_name());
+			String genericName = String.join(" ", dl.getOpenfda().getGeneric_name());
+			String substanceName = String.join(" ", dl.getOpenfda().getSubstance_name());
+			List<String> match = new ArrayList<String>(2); //initialize match as 2 is maximum
+			
+			DrugSearchResult dsr = new DrugSearchResult();
+			
+			dsr.setId(dl.getId());
+			dsr.setBrandName(brandName);
+			
+			//when: match on brand name
+			//then: create empty array (we don't want it redudanant)
+			if(genericName.toLowerCase().trim().contains(criteriaValue.toLowerCase().trim())){
+				match.add(genericName);
+			}
+			else if(substanceName.toLowerCase().trim().contains(criteriaValue.toLowerCase().trim())){
+				match.add(substanceName);
+			}
+			
+			dsr.setMatch(match);
+			dsrList.add(dsr);
+		}
+		
+		return dsrList;
 	}
 
 	@Override

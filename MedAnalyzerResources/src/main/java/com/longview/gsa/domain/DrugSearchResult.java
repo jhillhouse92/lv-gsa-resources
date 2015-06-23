@@ -2,28 +2,29 @@ package com.longview.gsa.domain;
 
 import java.util.List;
 
+
 public class DrugSearchResult {
 
-	private List<DrugLabel> brandName;
-	private List<DrugLabel> genericName;
-	private List<DrugLabel> substanceName;
+	String id;
+	String brandName;
+	List<String> match;
 	
-	public List<DrugLabel> getBrandName() {
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getBrandName() {
 		return brandName;
 	}
-	public void setBrandName(List<DrugLabel> brandName) {
+	public void setBrandName(String brandName) {
 		this.brandName = brandName;
 	}
-	public List<DrugLabel> getGenericName() {
-		return genericName;
+	public List<String> getMatch() {
+		return match;
 	}
-	public void setGenericName(List<DrugLabel> genericName) {
-		this.genericName = genericName;
-	}
-	public List<DrugLabel> getSubstanceName() {
-		return substanceName;
-	}
-	public void setSubstanceName(List<DrugLabel> substanceName) {
-		this.substanceName = substanceName;
+	public void setMatch(List<String> match) {
+		this.match = match;
 	}
 }
