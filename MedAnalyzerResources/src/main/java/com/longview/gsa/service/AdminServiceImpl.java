@@ -42,7 +42,7 @@ public class AdminServiceImpl implements AdminService {
 		try {
 			fdaResult = new Gson().fromJson(IOUtils.toString(
 					new URL(
-							"https://api.fda.govv/drug/label.json?limit=100&skip=0"),
+							"https://api.fda.gov/drug/label.json?limit=100&skip=0"),
 					Charset.forName("UTF-8")), FDAResult.class);
 		} catch (JsonSyntaxException e) {
 			throw new MedCheckerException("error error errror");
