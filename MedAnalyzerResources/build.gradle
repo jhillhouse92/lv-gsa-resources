@@ -12,7 +12,7 @@ buildscript {
 ant.importBuild '../ant-builds/tomcat/targets.xml'
 
 jar {
-	baseName = 'MedAnalyzerResources'
+	baseName = 'MedCheckerResources'
 	version = '0.0.1'
 	manifest {
         	attributes 'Main-Class': 'com.longview.gsa.config.ApplicationConfig'
@@ -63,6 +63,11 @@ dependencies {
 
 apply plugin: 'spring-boot'
 apply plugin: 'war'
+
+war {
+    baseName = 'MedCheckerResources'
+    version = '0.0.1'
+}
 
 task wrapper(type: Wrapper) {
 	gradleVersion = '1.11'
