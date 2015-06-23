@@ -10,11 +10,11 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class MedAnalyzerExceptionHandler extends ResponseEntityExceptionHandler{
+public class MedCheckerExceptionHandler extends ResponseEntityExceptionHandler{
 
-    @ExceptionHandler({ MedsAnalyzerException.class })
+    @ExceptionHandler({ MedCheckerException.class })
     protected ResponseEntity<Object> handleInvalidRequest(RuntimeException e, WebRequest request) {
-    	MedsAnalyzerException ire = (MedsAnalyzerException) e;
+    	MedCheckerException ire = (MedCheckerException) e;
         /*List<FieldErrorResource> fieldErrorResources = new ArrayList<FieldErrorResource>();
 
         List<FieldError> fieldErrors = ire.getErrors().getFieldErrors();
