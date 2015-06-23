@@ -9,9 +9,14 @@ buildscript {
     }
 }
 
+ant.importBuild '../ant-builds/tomcat/targets.xml'
+
 jar {
 	baseName = 'MedAnalyzerResources'
 	version = '0.0.1'
+	manifest {
+        	attributes 'Main-Class': 'com.longview.gsa.config.ApplicationConfig'
+    	}
 }
 
 repositories {
@@ -22,9 +27,13 @@ repositories {
     maven { url 'http://repo.spring.io/snapshot' }
 }
 
+configurations{
+    providedRuntimeTomcat
+}
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
+    providedRuntimeTomcat('org.springframework.boot:spring-boot-starter-tomcat')
     compile("org.springframework.data:spring-data-mongodb:1.7.0.BUILD-SNAPSHOT")
     compile("org.springframework.data:spring-data-rest-webmvc")
     compile('com.fasterxml.jackson.core:jackson-databind:2.5.0')
@@ -52,4 +61,4 @@ task wrapper(type: Wrapper) {
 task showMeCache << {
   configurations.compile.each { println it }
 }
-
+ant.properties['deployment.war.file.path']=war.archivePath

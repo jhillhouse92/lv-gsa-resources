@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="tomcat.targets">
+  <import file="properties.xml" />
+	
+  <property name="ml-ant-http.jar" value="ml-ant-http-1.1.3.jar"/>
+
+  <fileset id="runtime.libs" dir="./build-lib/">
+    <include name="${ml-ant-http.jar}"/>
+  </fileset>
+  
+  <path id="runtime.classpath">
+    <fileset refid="runtime.libs"/>
+  </path>
+
+  <taskdef name="http" classname="org.missinglink.ant.task.http.HttpClientTask">
+    <classpath refid="runtime.classpath"/>
+  </taskdef>
+ 
+	<target name="deployWar" depends="build">
+		
+		<echo message="Deploying to Tomcat" />
+		
+		<echo message="mgr.url = ${mgr.url}" />
+		<echo message="mgr.username = ${mgr.username}" />
+		<echo message="mgr.password = ${mgr.password}" />
+		<echo message="deployment.war.name = ${deployment.war.name}" />
+		<echo message="deployment.war.file.path = ${deployment.war.file.path}" />
+
+		<deploy url="${mgr.url}" username="${mgr.username}" password="${mgr.password}"
+		            path="/${deployment.war.name}" update="true" war="${deployment.war.file.path}"/>
+
+		<echo message="Checking if app is Deployed to Tomcat" />
+
+    <http url="${app.url}" statusProperty="http.status" expected="${statuscode}"/>
+    
+    <echo>"App deploy is Successful, HttpStatus : ${http.status}"</echo>
+
+	</target>
+  
+
+</project>
