@@ -15,5 +15,6 @@ public class MedCheckerException extends RuntimeException{
     
     public MedCheckerException(String message, Throwable t) {
         super(message, t);
+        log.error(t);
     }
 }

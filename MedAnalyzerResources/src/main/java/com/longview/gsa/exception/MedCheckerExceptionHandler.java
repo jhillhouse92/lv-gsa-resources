@@ -15,21 +15,9 @@ public class MedCheckerExceptionHandler extends ResponseEntityExceptionHandler{
     @ExceptionHandler({ MedCheckerException.class })
     protected ResponseEntity<Object> handleInvalidRequest(RuntimeException e, WebRequest request) {
     	MedCheckerException ire = (MedCheckerException) e;
-        /*List<FieldErrorResource> fieldErrorResources = new ArrayList<FieldErrorResource>();
-
-        List<FieldError> fieldErrors = ire.getErrors().getFieldErrors();
-        for (FieldError fieldError : fieldErrors) {
-            FieldErrorResource fieldErrorResource = new FieldErrorResource();
-            fieldErrorResource.setResource(fieldError.getObjectName());
-            fieldErrorResource.setField(fieldError.getField());
-            fieldErrorResource.setCode(fieldError.getCode());
-            fieldErrorResource.setMessage(fieldError.getDefaultMessage());
-            fieldErrorResources.add(fieldErrorResource);
-        }*/
-
-        ErrorResource error = new ErrorResource("Invalid Request", ire.getMessage());
-        //error.setFieldErrors(fieldErrorResources);
-
+        
+        ErrorResource error = new ErrorResource(HttpStatus.BAD_REQUEST.name(), ire.getMessage());
+        
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
