@@ -1,0 +1,9 @@
+language: java
+java: 
+ - "1.8"
+install: 
+ - gradle test
+notifications:
+ email:
+  on_success: never
+  on_failure: always
