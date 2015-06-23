@@ -12,6 +12,7 @@ import com.longview.gsa.domain.DrugLabel;
 import com.longview.gsa.domain.DrugSearchResult;
 import com.longview.gsa.domain.GraphResult;
 import com.longview.gsa.repository.DrugRepository;
+import com.longview.gsa.repository.OpenFdaRepository;
 
 @Service
 public class DrugServiceImpl implements DrugService{
@@ -22,18 +23,24 @@ public class DrugServiceImpl implements DrugService{
 	@Autowired
 	private AdminService adminSerivce;
 	
+	@Autowired 
+	OpenFdaRepository openFdaRepository;
+	
 	private static final String[] fieldNames = {"openfda.brand_name","openfda.generic_name","openfda.substance_name"}; 
 
 	@Override
 	public List<DrugSearchResult> fetchMedList(String criteriaValue){	
 		List<DrugSearchResult> dsrList = new ArrayList<DrugSearchResult>();
 		
-		List<DrugLabel> mongoSearchResults = drugRepository.fetchMedsList(Arrays.asList(fieldNames), criteriaValue);
-		
-		for(DrugLabel dl : mongoSearchResults){
-			String brandName = String.join(" ", dl.getOpenfda().getBrand_name());
-			String genericName = String.join(" ", dl.getOpenfda().getGeneric_name());
-			String substanceName = String.join(" ", dl.getOpenfda().getSubstance_name());
+		List<DrugLabel> apiSearchResults = openFdaRepository.searchFromFDA(Arrays.asList(fieldNames), criteriaValue);
+		String brandName = "", genericName = "", substanceName = "";
+		for(DrugLabel dl : apiSearchResults){
+			if(dl.getOpenfda().getBrand_name()!=null)
+				brandName = String.join(" ", dl.getOpenfda().getBrand_name());
+			if(dl.getOpenfda().getGeneric_name()!=null)
+				genericName = String.join(" ", dl.getOpenfda().getGeneric_name());
+			if(dl.getOpenfda().getSubstance_name()!=null)
+				substanceName = String.join(" ", dl.getOpenfda().getSubstance_name());
 			List<String> match = new ArrayList<String>(2); //initialize match as 2 is maximum
 			
 			DrugSearchResult dsr = new DrugSearchResult();

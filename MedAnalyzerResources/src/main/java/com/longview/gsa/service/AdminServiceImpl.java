@@ -45,11 +45,11 @@ public class AdminServiceImpl implements AdminService {
 							"https://api.fda.gov/drug/label.json?limit=100&skip=0"),
 					Charset.forName("UTF-8")), FDAResult.class);
 		} catch (JsonSyntaxException e) {
-			throw new MedCheckerException("error error errror");
+			throw new MedCheckerException("An error occured access APIr");
 		} catch (MalformedURLException e) {
-			throw new MedCheckerException("error error errror");
+			throw new MedCheckerException("An error occured access API");
 		} catch (IOException e) {
-			throw new MedCheckerException("error error errror");
+			throw new MedCheckerException("An error occured access API");
 		}
 		drugRepository.insert(fdaResult.getResults());
 	}
