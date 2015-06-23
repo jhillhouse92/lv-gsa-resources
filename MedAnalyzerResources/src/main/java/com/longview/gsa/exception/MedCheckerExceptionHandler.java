@@ -27,7 +27,7 @@ public class MedCheckerExceptionHandler extends ResponseEntityExceptionHandler{
             fieldErrorResources.add(fieldErrorResource);
         }*/
 
-        ErrorResource error = new ErrorResource("InvalidRequest", ire.getErrors());
+        ErrorResource error = new ErrorResource("Invalid Request", ire.getMessage());
         //error.setFieldErrors(fieldErrorResources);
 
         HttpHeaders headers = new HttpHeaders();
