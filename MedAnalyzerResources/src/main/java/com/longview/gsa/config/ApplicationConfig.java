@@ -1,7 +1,6 @@
 package com.longview.gsa.config;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
@@ -9,10 +8,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
-
-@SpringBootApplication
-@EnableWebMvc
+	
 @Configuration
+@EnableWebMvc
 @ComponentScan("com.longview.gsa")
 public class ApplicationConfig extends AbstractMongoConfiguration {
 
