@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.longview.gsa.domain.DrugLabel;
+import com.longview.gsa.domain.DrugSearchResult;
 import com.longview.gsa.domain.GraphResult;
 import com.longview.gsa.repository.DrugRepository;
 
@@ -24,8 +25,13 @@ public class DrugServiceImpl implements DrugService{
 	private static final String[] fieldNames = {"openfda.brand_name","openfda.generic_name","openfda.substance_name"}; 
 
 	@Override
-	public List<DrugLabel> fetchMedList(String criteriaValue){	
-		return drugRepository.fetchMedsList(Arrays.asList(fieldNames), criteriaValue);		
+	public DrugSearchResult fetchMedList(String criteriaValue){	
+		DrugSearchResult dsr = new DrugSearchResult();
+		dsr.setBrandName(drugRepository.fetchMedsList(Arrays.asList(fieldNames[0]), criteriaValue));
+		dsr.setGenericName(drugRepository.fetchMedsList(Arrays.asList(fieldNames[1]), criteriaValue));
+		dsr.setSubstanceName(drugRepository.fetchMedsList(Arrays.asList(fieldNames[2]), criteriaValue));
+		
+		return dsr;
 	}
 
 	@Override

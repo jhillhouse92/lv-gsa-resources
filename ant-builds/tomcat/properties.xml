@@ -12,8 +12,8 @@
 	  <!-- Configure properties to access the Manager application -->
 	  <property name="mgr.url"			value="http://localhost:8080/manager/text"/>
 	  <property name="mgr.username"		value="admin"/>
-	  <property name="mgr.password"		value="lvadmin12@#"/>
-	  <property name="app.url"			value="http://localhost:8080/MedCheckerResources"/>
+	  <property name="mgr.password"		value="Agilexadmin99$"/>
+	  <property name="app.url"			value="http://localhost:8080/MedAnalyzerResources"/>
 	  <property name="statuscode"		value="200"/>
       <property name="deployment.war.name"			value="MedCheckerResources"/>
 </project>
