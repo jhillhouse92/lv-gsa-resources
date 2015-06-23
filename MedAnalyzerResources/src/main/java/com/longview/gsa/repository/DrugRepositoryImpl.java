@@ -85,11 +85,9 @@ public class DrugRepositoryImpl implements DrugRepository {
 
 	@Override
 	public Iterable<DrugLabel> findAll(Iterable<String> ids) {
-		// TODO Auto-gene	rated method stub
-		//List<String> idList = StreamSupport.stream(ids.spliterator(), false)
-		//		.collect(Collectors.toList());
-		//return mongoTemplate.find(new Query().addCriteria(Criteria.where("id").in(idList)), DrugLabel.class);
-		return null;
+		List<String> idList = StreamSupport.stream(ids.spliterator(), false)
+			.collect(Collectors.toList());
+		return mongoTemplate.find(new Query().addCriteria(Criteria.where("id").in(idList)), DrugLabel.class);
 	}
 
 	@Override
@@ -140,14 +138,5 @@ public class DrugRepositoryImpl implements DrugRepository {
 			return mongoTemplate.find(new Query(criteria.orOperator(criteriaList.toArray(new Criteria[fieldNames.size()]))), DrugLabel.class);
 		}
 		return null;
-	}
-	
-	@Override
-	public List<DrugLabel> findAllById(List<String> ids){
-		ArrayList<String> a = new ArrayList<String>();
-		for(int i = 0; i < 1; i++){
-			a.add(ids.get(i));
-		}
-		return mongoTemplate.find(new Query().addCriteria(Criteria.where("id").in(a)), DrugLabel.class);
 	}
 }
