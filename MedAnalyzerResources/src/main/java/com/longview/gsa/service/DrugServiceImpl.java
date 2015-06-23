@@ -24,7 +24,7 @@ public class DrugServiceImpl implements DrugService{
 	private AdminService adminSerivce;
 	
 	@Autowired 
-	OpenFdaRepository openFdaRepository;
+	private OpenFdaRepository openFdaRepository;
 	
 	private static final String[] fieldNames = {"openfda.brand_name","openfda.generic_name","openfda.substance_name"}; 
 

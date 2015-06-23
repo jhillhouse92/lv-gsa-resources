@@ -12,6 +12,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.longview.gsa.domain.DrugLabel;
 import com.longview.gsa.domain.FDAResult;
 import com.longview.gsa.exception.MedCheckerException;
+import com.longview.gsa.exception.OpenFdaExceptionHandler;
 
 @Repository
 public class OpenFdaRepositoryImpl implements OpenFdaRepository {
@@ -25,6 +26,7 @@ public class OpenFdaRepositoryImpl implements OpenFdaRepository {
 	public List<DrugLabel> searchFromFDA(List<String> fieldNames, String criteriaValue){
 		FDAResult fdaResult = new FDAResult();
 		StringBuffer buffer = new StringBuffer();
+		restTemplate.setErrorHandler(new OpenFdaExceptionHandler());
 		for (String fieldName: fieldNames) {
 			buffer.append(fieldName);
 			buffer.append(":");
@@ -36,8 +38,7 @@ public class OpenFdaRepositoryImpl implements OpenFdaRepository {
 		try{
 			fdaResult = restTemplate.getForObject(uriComponents.toUri(),FDAResult.class);
 		}catch(Exception e){
-			log.error("Invalid API request", e);
-			throw new MedCheckerException("Invalid API request", e);
+			throw new MedCheckerException(e.getMessage());
 		}		
 		return (fdaResult==null?null:fdaResult.getResults());
 	}

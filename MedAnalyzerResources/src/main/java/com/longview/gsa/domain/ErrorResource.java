@@ -1,4 +1,4 @@
-package com.longview.gsa.exception;
+package com.longview.gsa.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
