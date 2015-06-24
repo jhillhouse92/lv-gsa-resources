@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.longview.gsa.domain.DrugLabel;
 import com.longview.gsa.domain.DrugSearchResult;
 import com.longview.gsa.domain.GraphResult;
-import com.longview.gsa.exception.MedCheckerException;
 import com.longview.gsa.repository.DrugRepository;
 import com.longview.gsa.repository.OpenFdaRepository;
 import com.longview.gsa.utility.GsaParameterChecking;
