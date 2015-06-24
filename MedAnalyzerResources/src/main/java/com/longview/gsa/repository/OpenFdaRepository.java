@@ -1,6 +1,7 @@
 package com.longview.gsa.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import com.longview.gsa.domain.DrugLabel;
 
@@ -11,5 +12,7 @@ public interface OpenFdaRepository {
 	DrugLabel searchFromFDAById(String id);
 
 	List<DrugLabel> searchFromFDAById(List<String> ids);
+
+	List<DrugLabel> searchFromFDA(Map<String, String> fieldNamesWithCriteria);
 	
 }

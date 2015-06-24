@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 import com.longview.gsa.domain.DrugLabel;
 import com.longview.gsa.domain.DrugSearchResult;
 import com.longview.gsa.domain.GraphResult;
+import com.longview.gsa.exception.MedCheckerException;
 import com.longview.gsa.repository.DrugRepository;
 import com.longview.gsa.repository.OpenFdaRepository;
+import com.longview.gsa.utility.GsaParameterChecking;
+import com.longview.gsa.utility.NullCheck;
 
 @Service
 public class DrugServiceImpl implements DrugService{
@@ -31,21 +34,24 @@ public class DrugServiceImpl implements DrugService{
 		add("openfda.generic_name");
 		add("openfda.substance_name");
 	}};
-	
+
 	@Override
-	public List<DrugSearchResult> fetchMedList(String criteriaValue){	
+	public List<DrugSearchResult> fetchMedList(String criteriaValue){
+		GsaParameterChecking.check(criteriaValue);
+		
 		List<DrugSearchResult> dsrList = new ArrayList<DrugSearchResult>();
 		
 		List<DrugLabel> apiSearchResults = openFdaRepository.searchFromFDA(fieldNames, criteriaValue);
+		
 		String brandName = "", genericName = "", substanceName = "", manufacturerName = "";
 		for(DrugLabel dl : apiSearchResults){
-			if(dl.getOpenfda().getBrand_name()!=null)
+			if(!NullCheck.isNullish(dl.getOpenfda().getBrand_name()))
 				brandName = String.join(" ", dl.getOpenfda().getBrand_name());
-			if(dl.getOpenfda().getGeneric_name()!=null)
+			if(!NullCheck.isNullish(dl.getOpenfda().getGeneric_name()))
 				genericName = String.join(" ", dl.getOpenfda().getGeneric_name());
-			if(dl.getOpenfda().getSubstance_name()!=null)
+			if(!NullCheck.isNullish(dl.getOpenfda().getSubstance_name()))
 				substanceName = String.join(" ", dl.getOpenfda().getSubstance_name());
-			if(dl.getOpenfda().getManufacturer_name()!=null)
+			if(!NullCheck.isNullish(dl.getOpenfda().getManufacturer_name()))
 				manufacturerName = String.join(" ", dl.getOpenfda().getManufacturer_name());
 			List<String> match = new ArrayList<String>(2); //initialize match as 2 is maximum
 			
@@ -73,22 +79,25 @@ public class DrugServiceImpl implements DrugService{
 
 	@Override
 	public List<GraphResult> fetchGraph(List<String> ids) {
+		GsaParameterChecking.check(ids);
+		
 		//create list of GraphResult
 		List<GraphResult> results = new ArrayList<GraphResult>();
 		
 		//get list of the drugs
 		List<DrugLabel> drugLabels = (List<DrugLabel>) drugRepository.findAll(ids);
 		
-		for(DrugLabel drug : drugLabels){
-			ids.remove(drug.getId());
+		if(NullCheck.isNotNullish(drugLabels) && ids.size()!=drugLabels.size()){
+			for(DrugLabel drug : drugLabels){
+				ids.remove(drug.getId());
+			}
 		}
-		
 		drugLabels.addAll(addDrugLabelsToDB(ids));
 		//for each drug, look which warnings match
 		for(DrugLabel drug : drugLabels){
 			
 			//for each warning check to see if this warning matches
-			if(null != drug.getWarnings()){
+			if(!NullCheck.isNullish(drug.getWarnings())){
 				String warning = String.join(" ", drug.getWarnings());
 				
 				//find based on mapReduce results using same algorithm of warning before or after
@@ -107,15 +116,15 @@ public class DrugServiceImpl implements DrugService{
 				results.add(graphItem);
 			}
 		}
-		
-		
 		return results;
 	}
 
 	@Override
 	public DrugLabel fetchLabel(String id) {
+		GsaParameterChecking.check(id);
+		
 		DrugLabel drugLabel = drugRepository.findOne(id);
-		if(null == drugLabel){
+		if(null == drugLabel){ 
 			drugLabel = addDrugLabelToDB(id);
 		}
 		return drugLabel;

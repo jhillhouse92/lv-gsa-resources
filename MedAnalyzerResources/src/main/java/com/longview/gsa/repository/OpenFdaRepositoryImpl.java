@@ -1,6 +1,8 @@
 package com.longview.gsa.repository;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -29,7 +31,21 @@ public class OpenFdaRepositoryImpl implements OpenFdaRepository {
 		}
 		return fdaDataSet(searchString.toString());
 	}
-
+	
+	@Override
+	public List<DrugLabel> searchFromFDA(Map<String,String> fieldNamesWithCriteria){
+		StringBuffer searchString = new StringBuffer();	
+		Iterator<String> fieldIterator = fieldNamesWithCriteria.keySet().iterator();
+		while(fieldIterator.hasNext()) {
+			String key = fieldIterator.next();
+			searchString.append(key)
+			.append(":")
+			.append(fieldNamesWithCriteria.get(key))
+			.append("+");
+		}
+		return fdaDataSet(searchString.toString());
+	}
+	
 	@Override
 	public DrugLabel searchFromFDAById(String id) {
 		StringBuffer searchString = new StringBuffer("id")
@@ -52,11 +68,18 @@ public class OpenFdaRepositoryImpl implements OpenFdaRepository {
 	}
 	
 	private List<DrugLabel> fdaDataSet(String searchString){
+		return fdaDataSet(searchString, "", "");		
+	}
+	
+	private List<DrugLabel> fdaDataSet(String searchString, String limit, String skip){
 		FDAResult fdaResult = null;
 		
 		StringBuffer buffer = new StringBuffer("https://api.fda.gov/drug/label.json?search=")
 		.append(searchString)
-		.append("&limit=100");
+		.append("&limit=")
+		.append(limit)
+		.append("&skip=")
+		.append(skip);
 		
 		UriComponents uriComponents = UriComponentsBuilder.fromUriString(buffer.toString()).build();
 		

@@ -39,40 +39,6 @@ public class DrugLabelingController {
 		return new String("Successfully imported warning categories.");
 	}
 	
-	@RequestMapping(value = "/clean-warnings")
-	public String cleanWarnings() {
-		try {
-			Dictionary d = 	Dictionary.getDefaultResourceInstance();
-			IndexWordSet word = d.lookupAllIndexWords("keep");
-			
-			List<Speech> typeOfSpeech = new ArrayList<Speech>();
-			typeOfSpeech.add(new Speech(POS.NOUN, word.getSenseCount(POS.NOUN)));
-			typeOfSpeech.add(new Speech(POS.VERB, word.getSenseCount(POS.VERB)));
-			typeOfSpeech.add(new Speech(POS.ADJECTIVE, word.getSenseCount(POS.NOUN)));
-			typeOfSpeech.add(new Speech(POS.ADVERB, word.getSenseCount(POS.ADVERB)));
-				
-			Collections.sort(typeOfSpeech, (object1, object2) -> object2.count.compareTo(object1.count));
-			
-			if(typeOfSpeech.get(0).pos == POS.NOUN) 
-				return new String("The type of speech is:" + typeOfSpeech.get(0).pos + ". The count is:" + typeOfSpeech.get(0).count);
-		} catch (JWNLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	public class Speech{
-		
-		public POS pos;
-		public Integer count;
-		
-		public Speech(POS pos, Integer count){
-			this.pos = pos;
-			this.count = count;
-		}
-	}
-	
 	@RequestMapping(value = "/search/{keyWord}")
 	public List<DrugSearchResult> fetchMedList(@PathVariable String keyWord) {
 		return drugService.fetchMedList(keyWord);

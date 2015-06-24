@@ -6,7 +6,6 @@ import com.longview.gsa.domain.WarningCategory;
 
 public interface AdminService {
 
-	void importFromFDA();
 	void ImportWarningCategories();
 	List<WarningCategory> getWarningCategories();
 }

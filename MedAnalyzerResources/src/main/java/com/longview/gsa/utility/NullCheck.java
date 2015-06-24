@@ -45,6 +45,14 @@ public class NullCheck {
 		}
 		return result;
 	}
+	
+	public static boolean isNullish(Object[] value) {
+		boolean result = false;
+		if ((value == null) || (value.length == 0)) {
+			result = true;
+		}
+		return result;
+	}
 
 	public static boolean isNotNullish(Collection<?> value) {
 		return (!isNullish(value));

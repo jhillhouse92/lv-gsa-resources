@@ -1,15 +1,10 @@
 package com.longview.gsa.service;
 
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +13,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import com.longview.gsa.domain.FDAResult;
 import com.longview.gsa.domain.WarningCategory;
 import com.longview.gsa.exception.MedCheckerException;
 import com.longview.gsa.repository.DrugRepository;
@@ -36,27 +30,7 @@ public class AdminServiceImpl implements AdminService {
 	public WarningCategoriesRepository warningRepo;
 	
 	@Override
-	public void importFromFDA(){
-		
-		FDAResult fdaResult = new FDAResult();
-		try {
-			fdaResult = new Gson().fromJson(IOUtils.toString(
-					new URL(
-							"https://api.fda.gov/drug/label.json?limit=100&skip=0"),
-					Charset.forName("UTF-8")), FDAResult.class);
-		} catch (JsonSyntaxException e) {
-			throw new MedCheckerException("An error occured access APIr");
-		} catch (MalformedURLException e) {
-			throw new MedCheckerException("An error occured access API");
-		} catch (IOException e) {
-			throw new MedCheckerException("An error occured access API");
-		}
-		drugRepository.insert(fdaResult.getResults());
-	}
-	
-	@Override
 	public void ImportWarningCategories() {
-		// TODO Auto-generated method stub
 		List<WarningCategory> warningCategories = new ArrayList<WarningCategory>();
 		try {
 			Reader reader = new InputStreamReader(AdminServiceImpl.class.getClassLoader().getResourceAsStream("mongo/warningCategories.json"));
@@ -65,11 +39,11 @@ public class AdminServiceImpl implements AdminService {
 					new TypeToken<List<WarningCategory>>() {}.getType());
 
 		} catch (JsonSyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
+			throw new MedCheckerException(e.getMessage());
 		} catch(JsonIOException e) {
-			
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
+			throw new MedCheckerException(e.getMessage());
 		}
 		
 		warningRepo.insert(warningCategories);
@@ -77,7 +51,6 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<WarningCategory> getWarningCategories() {
-		// TODO Auto-generated method stub
 		return warningRepo.fetchValidWarnings();
 	}
 }
