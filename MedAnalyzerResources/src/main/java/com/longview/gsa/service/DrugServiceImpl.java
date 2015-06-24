@@ -91,21 +91,31 @@ public class DrugServiceImpl implements DrugService{
 			for(DrugLabel drug : drugLabels){
 				ids.remove(drug.getId());
 			}
+			drugLabels.addAll(addDrugLabelsToDB(ids));
 		}
-		drugLabels.addAll(addDrugLabelsToDB(ids));
+		
 		//for each drug, look which warnings match
 		for(DrugLabel drug : drugLabels){
 			
 			//for each warning check to see if this warning matches
+			
+			StringBuffer buffer = new StringBuffer();
 			if(!NullCheck.isNullish(drug.getWarnings())){
-				String warning = String.join(" ", drug.getWarnings());
-				
+				buffer.append(String.join(" ", drug.getWarnings()));
+			}
+			if(!NullCheck.isNullish(drug.getWarnings_and_cautions())){
+				buffer.append(String.join(" ", drug.getWarnings_and_cautions()));
+			}
+			
+			String warning = buffer.toString().replaceAll("[^a-zA-Z\\s]", "");
+			
 				//find based on mapReduce results using same algorithm of warning before or after
 				List<String> warningCategories = 
 						adminSerivce.getWarningCategories().stream()
 						.filter(w -> warning.toLowerCase().contains(w.get_id().split(" ")[0].toLowerCase().trim() + " warning")
 									|| warning.toLowerCase().contains("warning " + w.get_id().split(" ")[0].toLowerCase().trim())
 									|| warning.toLowerCase().contains("warnings " + w.get_id().split(" ")[0].toLowerCase().trim())
+									|| warning.toLowerCase().contains("warnings and precautions " + w.get_id().split(" ")[0].toLowerCase().trim())
 								)
 						.map(w -> w.get_id())
 						.collect(Collectors.toList());
@@ -113,9 +123,13 @@ public class DrugServiceImpl implements DrugService{
 				graphItem.setId(drug.getId());
 				graphItem.setBrandName(String.join(" ", drug.getOpenfda().getBrand_name()));
 				graphItem.setWarnings(warningCategories);
+				if(NullCheck.isNullish(graphItem.getWarnings()) && NullCheck.isNotNullish(warning)){
+					warningCategories.add("Other Warnings");
+					graphItem.setWarnings(warningCategories);
+				}
+				
 				results.add(graphItem);
 			}
-		}
 		return results;
 	}
 

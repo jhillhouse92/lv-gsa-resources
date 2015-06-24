@@ -68,10 +68,10 @@ public class OpenFdaRepositoryImpl implements OpenFdaRepository {
 	}
 	
 	private List<DrugLabel> fdaDataSet(String searchString){
-		return fdaDataSet(searchString, "", "");		
+		return fdaDataSet(searchString, 100, 0);		
 	}
 	
-	private List<DrugLabel> fdaDataSet(String searchString, String limit, String skip){
+	private List<DrugLabel> fdaDataSet(String searchString, int limit, int skip){
 		FDAResult fdaResult = null;
 		
 		StringBuffer buffer = new StringBuffer("https://api.fda.gov/drug/label.json?search=")
