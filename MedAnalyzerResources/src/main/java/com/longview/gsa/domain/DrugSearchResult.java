@@ -7,6 +7,7 @@ public class DrugSearchResult {
 
 	String id;
 	String brandName;
+	String manufacturerName;
 	List<String> match;
 	
 	public String getId() {
@@ -26,5 +27,11 @@ public class DrugSearchResult {
 	}
 	public void setMatch(List<String> match) {
 		this.match = match;
+	}
+	public String getManufacturerName() {
+		return manufacturerName;
+	}
+	public void setManufacturerName(String manufacturerName) {
+		this.manufacturerName = manufacturerName;
 	}
 }

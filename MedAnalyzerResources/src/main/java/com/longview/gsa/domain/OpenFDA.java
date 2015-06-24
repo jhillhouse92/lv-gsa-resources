@@ -6,7 +6,7 @@ public class OpenFDA {
 	String[] brand_name;
 	String[] dosage_form;
 	String[] generic_name;
-	String[] manufacture_name;
+	String[] manufacturer_name;
 	String[] substance_name;
 	String[] pharm_class_epc;
 	
@@ -34,11 +34,11 @@ public class OpenFDA {
 	public void setGeneric_name(String[] generic_name) {
 		this.generic_name = generic_name;
 	}
-	public String[] getManufacture_name() {
-		return manufacture_name;
+	public String[] getManufacturer_name() {
+		return manufacturer_name;
 	}
-	public void setManufacture_name(String[] manufacture_name) {
-		this.manufacture_name = manufacture_name;
+	public void setManufacturer_name(String[] manufacturer_name) {
+		this.manufacturer_name = manufacturer_name;
 	}
 	public String[] getSubstance_name() {
 		return substance_name;

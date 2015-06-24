@@ -37,7 +37,7 @@ public class DrugServiceImpl implements DrugService{
 		List<DrugSearchResult> dsrList = new ArrayList<DrugSearchResult>();
 		
 		List<DrugLabel> apiSearchResults = openFdaRepository.searchFromFDA(fieldNames, criteriaValue);
-		String brandName = "", genericName = "", substanceName = "";
+		String brandName = "", genericName = "", substanceName = "", manufacturerName = "";
 		for(DrugLabel dl : apiSearchResults){
 			if(dl.getOpenfda().getBrand_name()!=null)
 				brandName = String.join(" ", dl.getOpenfda().getBrand_name());
@@ -45,12 +45,15 @@ public class DrugServiceImpl implements DrugService{
 				genericName = String.join(" ", dl.getOpenfda().getGeneric_name());
 			if(dl.getOpenfda().getSubstance_name()!=null)
 				substanceName = String.join(" ", dl.getOpenfda().getSubstance_name());
+			if(dl.getOpenfda().getManufacturer_name()!=null)
+				manufacturerName = String.join(" ", dl.getOpenfda().getManufacturer_name());
 			List<String> match = new ArrayList<String>(2); //initialize match as 2 is maximum
 			
 			DrugSearchResult dsr = new DrugSearchResult();
 			
 			dsr.setId(dl.getId());
 			dsr.setBrandName(brandName);
+			dsr.setManufacturerName(manufacturerName);
 			
 			//when: match on brand name
 			//then: create empty array (we don't want it redudanant)

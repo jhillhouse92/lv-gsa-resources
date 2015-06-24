@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.longview.gsa.domain.DrugLabel;
 import com.longview.gsa.domain.DrugSearchResult;
 import com.longview.gsa.domain.GraphResult;
-import com.longview.gsa.domain.Greeting;
 import com.longview.gsa.service.AdminService;
 import com.longview.gsa.service.DrugService;
 
@@ -35,14 +34,13 @@ public class DrugLabelingController {
 	private AdminService adminService;
 	
 	@RequestMapping(value = "/setup")
-	public Greeting setup() {
-		adminService.importFromFDA();
+	public String setup() {
 		adminService.ImportWarningCategories();
-		return new Greeting(1, "Setup ran!");
+		return new String("Successfully imported warning categories.");
 	}
 	
 	@RequestMapping(value = "/clean-warnings")
-	public Greeting cleanWarnings() {
+	public String cleanWarnings() {
 		try {
 			Dictionary d = 	Dictionary.getDefaultResourceInstance();
 			IndexWordSet word = d.lookupAllIndexWords("keep");
@@ -56,7 +54,7 @@ public class DrugLabelingController {
 			Collections.sort(typeOfSpeech, (object1, object2) -> object2.count.compareTo(object1.count));
 			
 			if(typeOfSpeech.get(0).pos == POS.NOUN) 
-				return new Greeting(1, "The type of speech is:" + typeOfSpeech.get(0).pos + ". The count is:" + typeOfSpeech.get(0).count);
+				return new String("The type of speech is:" + typeOfSpeech.get(0).pos + ". The count is:" + typeOfSpeech.get(0).count);
 		} catch (JWNLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
