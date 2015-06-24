@@ -1,7 +1,6 @@
 package com.longview.gsa.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,13 +25,18 @@ public class DrugServiceImpl implements DrugService{
 	@Autowired 
 	private OpenFdaRepository openFdaRepository;
 	
-	private static final String[] fieldNames = {"openfda.brand_name","openfda.generic_name","openfda.substance_name"}; 
-
+	@SuppressWarnings("serial")
+	private static final ArrayList<String> fieldNames = new ArrayList<String>() {{
+		add("openfda.brand_name");
+		add("openfda.generic_name");
+		add("openfda.substance_name");
+	}};
+	
 	@Override
 	public List<DrugSearchResult> fetchMedList(String criteriaValue){	
 		List<DrugSearchResult> dsrList = new ArrayList<DrugSearchResult>();
 		
-		List<DrugLabel> apiSearchResults = openFdaRepository.searchFromFDA(Arrays.asList(fieldNames), criteriaValue);
+		List<DrugLabel> apiSearchResults = openFdaRepository.searchFromFDA(fieldNames, criteriaValue);
 		String brandName = "", genericName = "", substanceName = "";
 		for(DrugLabel dl : apiSearchResults){
 			if(dl.getOpenfda().getBrand_name()!=null)
@@ -72,6 +76,11 @@ public class DrugServiceImpl implements DrugService{
 		//get list of the drugs
 		List<DrugLabel> drugLabels = (List<DrugLabel>) drugRepository.findAll(ids);
 		
+		for(DrugLabel drug : drugLabels){
+			ids.remove(drug.getId());
+		}
+		
+		drugLabels.addAll(addDrugLabelsToDB(ids));
 		//for each drug, look which warnings match
 		for(DrugLabel drug : drugLabels){
 			
@@ -96,6 +105,28 @@ public class DrugServiceImpl implements DrugService{
 			}
 		}
 		
+		
 		return results;
+	}
+
+	@Override
+	public DrugLabel fetchLabel(String id) {
+		DrugLabel drugLabel = drugRepository.findOne(id);
+		if(null == drugLabel){
+			drugLabel = addDrugLabelToDB(id);
+		}
+		return drugLabel;
+	}
+	
+	private DrugLabel addDrugLabelToDB(String id){
+		DrugLabel drugLabel = openFdaRepository.searchFromFDAById(id);
+		drugRepository.insert(drugLabel);
+		return drugLabel;
+	}
+	
+	private List<DrugLabel> addDrugLabelsToDB(List<String> ids){
+		List<DrugLabel> drugLabels = openFdaRepository.searchFromFDAById(ids);
+		drugRepository.insert(drugLabels);
+		return drugLabels;
 	}
 }

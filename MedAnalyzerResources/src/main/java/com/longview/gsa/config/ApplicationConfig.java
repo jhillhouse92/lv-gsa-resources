@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.longview.gsa.exception.OpenFdaExceptionHandler;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 
@@ -41,6 +42,8 @@ public class ApplicationConfig extends AbstractMongoConfiguration {
 
 	@Bean
 	public RestTemplate restTemplate(){
-		return new RestTemplate();
+		return new RestTemplate() {{
+			setErrorHandler(new OpenFdaExceptionHandler());
+		}};
 	}
 }

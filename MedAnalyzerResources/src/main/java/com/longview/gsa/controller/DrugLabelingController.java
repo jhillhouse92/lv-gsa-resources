@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.longview.gsa.domain.DrugLabel;
 import com.longview.gsa.domain.DrugSearchResult;
 import com.longview.gsa.domain.GraphResult;
 import com.longview.gsa.domain.Greeting;
@@ -82,5 +83,10 @@ public class DrugLabelingController {
 	@RequestMapping(value = "graph", method = RequestMethod.POST)
 	public List<GraphResult> showGraph(@RequestBody List<String> ids){
 		return drugService.fetchGraph(ids);
+	}
+	
+	@RequestMapping(value = "label", method = RequestMethod.POST)
+	public DrugLabel showLabel(@RequestBody String id){
+		return drugService.fetchLabel(id);
 	}
 }
