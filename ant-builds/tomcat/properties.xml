@@ -1,15 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="tomcat.properties">
-  <taskdef classname="org.apache.catalina.ant.DeployTask" name="deploy">
-    <classpath>
-      <fileset dir="./build-lib/">
-        <include name="*.jar"/>
-      </fileset>
-    </classpath>
-  </taskdef>
-  <property name="mgr.username" value="admin"/>
-  <property name="statuscode" value="200"/>
-  <property name="deployment.war.name" value="MedCheckerResources"/>
-  <property name="mgr.url" value="null"/>
-  <property name="mgr.password" value="null"/>
-  <property name="app.url" value="null"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="tomcat.properties">
+
+	<taskdef name="deploy"    classname="org.apache.catalina.ant.DeployTask">
+		<classpath>
+			<fileset dir="./build-lib/">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+	</taskdef>
+
+	  <!-- Configure properties to access the Manager application -->
+	  <property name="mgr.url"			value="http://localhost:8080/manager/text"/>
+	  <property name="mgr.username"		value="manager"/>
+	  <property name="mgr.password"		value="localMagicPass"/>
+	  <property name="app.url"			value="http://localhost:8080/MedCheckerResources"/>
+	  <property name="statuscode"		value="200"/>
+      <property name="deployment.war.name"			value="MedCheckerResources"/>
 </project>
