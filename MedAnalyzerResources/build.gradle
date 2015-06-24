@@ -66,4 +66,9 @@ task wrapper(type: Wrapper) {
 task showMeCache << {
   configurations.compile.each { println it }
 }
+
+task myJavadocs(type: Javadoc) {
+  classpath = configurations.compile
+  source = sourceSets.main.allJava
+}
 ant.properties['deployment.war.file.path']=war.archivePath
