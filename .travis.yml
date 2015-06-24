@@ -3,7 +3,7 @@ jdk:
 - oraclejdk8
 install:
 - gradle test
-- gradle deployWar -Dmgr.url=PROD_TC_URL -Dmgr.password=$PROD_TC_PWD -Dapp.url=PROD_TC_APPURL -Dmgr.username=admin
+- gradle deployWar -Dmgr.url=$PROD_TC_URL -Dmgr.password=$PROD_TC_PWD -Dapp.url=$PROD_TC_APPURL -Dmgr.username=admin
 - exit 0
 notifications:
   email:
