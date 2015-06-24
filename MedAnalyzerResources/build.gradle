@@ -1,3 +1,4 @@
+import groovy.xml.*
 buildscript {
     repositories {
         maven { url "https://repo.spring.io/libs-release" }
@@ -65,5 +66,16 @@ task wrapper(type: Wrapper) {
 
 task showMeCache << {
   configurations.compile.each { println it }
+}
+task travisTomcatConfig {
+    def xml = new XmlSlurper().parse('ant-builds/tomcat/properties.xml.tmpl')
+    xml.appendNode{
+        property(name:'mgr.url',value:"$System.env.PROD_TC_URL")
+        property(name:'mgr.password', value:"$System.env.PROD_TC_PWD")
+        property(name:'app.url', value:"$System.env.PROD_TC_APPURL")
+    }
+
+    def writer = new FileWriter('ant-builds/tomcat/properties.xml')
+    XmlUtil.serialize(xml, writer)
 }
 ant.properties['deployment.war.file.path']=war.archivePath
