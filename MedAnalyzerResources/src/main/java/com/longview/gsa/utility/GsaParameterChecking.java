@@ -8,13 +8,13 @@ public class GsaParameterChecking {
 	
 	public static void check(String value){
 		if(NullCheck.isNullish(value)){
-			throw new MedCheckerException("Invalid paramater");
+			throw new MedCheckerException("Invalid parameter");
 		}
 	}
 	
 	public static void check(Collection<?> value){
 		if(NullCheck.isNullish(value)){
-			throw new MedCheckerException("Invalid paramaters");
+			throw new MedCheckerException("Invalid parameters");
 		}
 	}
 }

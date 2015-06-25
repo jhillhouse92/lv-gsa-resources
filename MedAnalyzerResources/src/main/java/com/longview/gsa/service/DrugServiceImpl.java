@@ -42,8 +42,8 @@ public class DrugServiceImpl implements DrugService{
 		
 		List<DrugLabel> apiSearchResults = openFdaRepository.searchFromFDA(fieldNames, criteriaValue);
 		
-		String brandName = "", genericName = "", substanceName = "", manufacturerName = "";
 		for(DrugLabel dl : apiSearchResults){
+			String brandName = "", genericName = "", substanceName = "", manufacturerName = "";	
 			if(!NullCheck.isNullish(dl.getOpenfda().getBrand_name()))
 				brandName = String.join(" ", dl.getOpenfda().getBrand_name());
 			if(!NullCheck.isNullish(dl.getOpenfda().getGeneric_name()))
