@@ -20,9 +20,8 @@
 		
 		<echo message="Deploying to Tomcat" />
 		
-		<echo message="mgr.url = ${mgr.url}" />
+
 		<echo message="mgr.username = ${mgr.username}" />
-		<echo message="mgr.password = ${mgr.password}" />
 		<echo message="deployment.war.name = ${deployment.war.name}" />
 		<echo message="deployment.war.file.path = ${deployment.war.file.path}" />
 
