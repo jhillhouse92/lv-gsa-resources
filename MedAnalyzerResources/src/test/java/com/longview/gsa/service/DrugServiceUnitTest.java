@@ -162,7 +162,7 @@ public class DrugServiceUnitTest {
 		Assert.assertNotNull(drugSearchResult);
 		Assert.assertEquals("CRESTOR", drugSearchResult.get(1).getBrandName());
 		Assert.assertNotNull(drugSearchResult);
-		Assert.assertEquals(null, drugSearchResult.get(2).getBrandName());
+		Assert.assertEquals("", drugSearchResult.get(2).getBrandName());
 	}
 	
 	private DrugLabel mockDrugLabel(){
