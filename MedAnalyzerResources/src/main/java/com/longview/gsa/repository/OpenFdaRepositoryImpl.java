@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
@@ -16,6 +17,9 @@ import com.longview.gsa.exception.MedCheckerException;
 
 @Repository
 public class OpenFdaRepositoryImpl implements OpenFdaRepository {
+	
+	@Value("${fda.endPoint}")
+	String endPoint;
 	
 	@Autowired
 	RestTemplate restTemplate;
@@ -68,13 +72,14 @@ public class OpenFdaRepositoryImpl implements OpenFdaRepository {
 	}
 	
 	private List<DrugLabel> fdaDataSet(String searchString){
-		return fdaDataSet(searchString, "", "");		
+		return fdaDataSet(searchString, 100, 0);		
 	}
 	
-	private List<DrugLabel> fdaDataSet(String searchString, String limit, String skip){
+	private List<DrugLabel> fdaDataSet(String searchString, int limit, int skip){
 		FDAResult fdaResult = null;
 		
-		StringBuffer buffer = new StringBuffer("https://api.fda.gov/drug/label.json?search=")
+		StringBuffer buffer = new StringBuffer(endPoint)
+		.append("?search=")
 		.append(searchString)
 		.append("&limit=")
 		.append(limit)

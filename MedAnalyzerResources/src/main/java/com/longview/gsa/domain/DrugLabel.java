@@ -10,6 +10,7 @@ public class DrugLabel {
 	String[] adverse_reactions;
 	String[] description;
 	String[] warnings;
+	String[] warnings_and_cautions;
 	OpenFDA openfda;
 	
 	public String getId() {
@@ -42,6 +43,10 @@ public class DrugLabel {
 	public void setOpenfda(OpenFDA openfda) {
 		this.openfda = openfda;
 	}
-	
-	
+	public String[] getWarnings_and_cautions() {
+		return warnings_and_cautions;
+	}
+	public void setWarnings_and_cautions(String[] warnings_and_cautions) {
+		this.warnings_and_cautions = warnings_and_cautions;
+	}	
 }

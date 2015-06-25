@@ -36,4 +36,6 @@
 { "_id" : "skin warning", "value" : 4, "valid" : true },
 { "_id" : "stop warning", "value" : 8 },
 { "_id" : "throat warning", "value" : 8, "valid" : true },
-{ "_id" : "very warning", "value" : 4 }]
+{ "_id" : "very warning", "value" : 4 },
+{ "_id" : "liver warnings and precautions", "value" : 8, "valid" : true },
+{ "_id" : "skeletal warnings and precautions", "value" : 8, "valid" : true }]
