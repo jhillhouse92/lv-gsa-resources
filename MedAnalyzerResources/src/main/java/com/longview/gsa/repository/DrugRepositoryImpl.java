@@ -53,7 +53,6 @@ public class DrugRepositoryImpl implements DrugRepository {
 
 	@Override
 	public <S extends DrugLabel> List<S> insert(Iterable<S> entities) {
-		mongoTemplate.dropCollection(DrugLabel.class);
 		mongoTemplate.insertAll((Collection<? extends Object>) entities);
 		return null;
 	}

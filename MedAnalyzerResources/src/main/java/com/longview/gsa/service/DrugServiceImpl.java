@@ -86,7 +86,7 @@ public class DrugServiceImpl implements DrugService{
 		//get list of the drugs
 		List<DrugLabel> drugLabels = (List<DrugLabel>) drugRepository.findAll(ids);
 		
-		if(NullCheck.isNotNullish(drugLabels) && ids.size()!=drugLabels.size()){
+		if(ids.size()!=drugLabels.size()){
 			for(DrugLabel drug : drugLabels){
 				ids.remove(drug.getId());
 			}
