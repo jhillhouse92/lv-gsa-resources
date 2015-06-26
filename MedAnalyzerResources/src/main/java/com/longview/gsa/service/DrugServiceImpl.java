@@ -120,7 +120,8 @@ public class DrugServiceImpl implements DrugService{
 						.collect(Collectors.toList());
 				GraphResult graphItem = new GraphResult();
 				graphItem.setId(drug.getId());
-				graphItem.setBrandName(String.join(" ", drug.getOpenfda().getBrand_name()));
+				if(!NullCheck.isNullish(drug.getOpenfda().getBrand_name()))
+					graphItem.setBrandName(String.join(" ", drug.getOpenfda().getBrand_name()));
 				graphItem.setWarnings(warningCategories);
 				if(NullCheck.isNullish(graphItem.getWarnings()) && NullCheck.isNotNullish(warning)){
 					warningCategories.add("Other Warnings");
